@@ -22,6 +22,7 @@ public:
     ~HarmonySearch();
 
     bool bool_probability(double probability);
+    std::uniform_int_distribution<int> distribution;
     
 
 

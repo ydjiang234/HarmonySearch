@@ -26,5 +26,6 @@ int main()
     par = ArrayXd::Ones(insNum,1) * 0.3;
 
     HarmonySearch *hs = new HarmonySearch(insRange, hms, hmcr, par, fwRatio);
-    cout<<"OK"<<endl;
+    default_random_engine generator;
+    cout<<hs->distribution(generator)<<endl;
 }
