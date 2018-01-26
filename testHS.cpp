@@ -15,7 +15,7 @@ int main()
     ArrayXd hmcr;
     ArrayXd par;
 
-    hms = 100;
+    hms = 10;
     insRange << 0,100,
                 0,100,
                 0,100,
@@ -26,6 +26,18 @@ int main()
     par = ArrayXd::Ones(insNum,1) * 0.3;
 
     HarmonySearch *hs = new HarmonySearch(insRange, hms, hmcr, par, fwRatio);
-    default_random_engine generator;
-    cout<<hs->distribution(generator)<<endl;
+    //cout<<hs->randomPitch(0)<<' '<<hs->randomPitch(0)<<endl;
+    //cout<<hs->randomPitch(0)<<' '<<hs->randomPitch(0)<<endl;
+    //cout<<hs->fitness<<endl;
+    unsigned int maxIter = 5000;
+    double maxFit;
+    ArrayXd maxVector;
+    for (unsigned int i=0; i<maxIter; i++)
+    {
+        hs->next();
+        maxFit = hs->OptimizedFitness();
+        maxVector = hs->OptimizedSolution();
+        printf("%0.4f %0.4f %0.4f %0.4f", maxVector(0), maxVector(1), maxVector(2), maxVector(3));
+        cout<<endl;
+    }
 }
