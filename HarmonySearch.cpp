@@ -4,13 +4,14 @@
 #include "HarmonySearch.h"
 
 
-HarmonySearch::HarmonySearch(Eigen::ArrayXXd insRange, unsigned int hms, Eigen::ArrayXd hmcr, Eigen::ArrayXd par, Eigen::ArrayXd fwRatio) : dis01(0.0, 1.0),dis1(-1.0,1.0),disId(0,hms-1)
+HarmonySearch::HarmonySearch(Eigen::ArrayXXd insRange, unsigned int hms, Eigen::ArrayXd hmcr, Eigen::ArrayXd par, Eigen::ArrayXd fwRatio, bool isForceRange) : dis01(0.0, 1.0),dis1(-1.0,1.0),disId(0,hms-1)
 {
     this->insRange = insRange;
     this->hms = hms;
     this->hmcr = hmcr;
     this->par = par;
     this->fwRatio = fwRatio;
+    this->isForceRange = isForceRange;
     //Initial
     this->insNum = this->insRange.rows();
     this->fw = this->fwRatio * (this->insRange.col(1) - this->insRange.col(0));
@@ -108,6 +109,7 @@ double HarmonySearch::selPitch(unsigned int insId)
         if (this->bool_probability(this->par(insId)))
         {
             newPitch = newPitch + this->random1() * this->fw(insId);
+            newPitch = this->limitRange(newPitch, insId);
         }
     } else {
         newPitch = this->randomPitch(insId);
@@ -133,6 +135,27 @@ double HarmonySearch::objFun(Eigen::ArrayXd vec)
     double m = vec(2);
     double n = vec(3);
     
-    double out = (x-2.0)*(x-2.0) + (y-30.0)*(y-30.0) + (m-15.0)*(m-15.0) + (n-98.0)*(n-98.0);
+    double out = (x-2.0)*(x-2.0) + (y-30.0)*(y-30.0) + (m-15.0)*(m-15.0) + (n-101.0)*(n-101.0);
     return out * -1;
+}
+
+double  HarmonySearch::limitRange(double pitch, unsigned int insId)
+{
+    double newPitch;
+    if (this->isForceRange)
+    {
+        if (pitch > this->insRange(insId, 1))
+        {
+            newPitch = insRange(insId, 1);
+        } else if (pitch < this->insRange(insId, 0))
+        {
+            newPitch = insRange(insId, 0);
+        } else {
+            newPitch = pitch;
+        }
+                
+    } else {
+        newPitch = pitch;
+    }
+    return newPitch;
 }

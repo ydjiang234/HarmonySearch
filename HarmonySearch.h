@@ -19,6 +19,7 @@ public:
     Eigen::ArrayXXd HM;
     Eigen::ArrayXd fitness;
     unsigned int  insNum;
+    bool isForceRange;
     
     //Other parameters
     std::random_device rd;
@@ -26,7 +27,7 @@ public:
     
     
     
-    HarmonySearch(Eigen::ArrayXXd insRange, unsigned int hms, Eigen::ArrayXd hmcr, Eigen::ArrayXd par, Eigen::ArrayXd fwRatio);
+    HarmonySearch(Eigen::ArrayXXd insRange, unsigned int hms, Eigen::ArrayXd hmcr, Eigen::ArrayXd par, Eigen::ArrayXd fwRatio, bool isForceRange);
     ~HarmonySearch();
     virtual double objFun(Eigen::ArrayXd vector);
     
@@ -62,6 +63,9 @@ public:
     int randomId();
     //Get random pitch from the instrument range when input an instrument id
     double randomPitch(unsigned insId);
+    
+    //Change if an instrument is out of range
+    double limitRange(double pitch, unsigned int insId);
 };
 
 

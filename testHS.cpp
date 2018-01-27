@@ -14,6 +14,7 @@ int main()
     ArrayXd fwRatio;
     ArrayXd hmcr;
     ArrayXd par;
+    bool isForceRange;
 
     hms = 10;
     insRange << 0,100,
@@ -24,8 +25,9 @@ int main()
     fwRatio = ArrayXd::Ones(insNum,1) * 0.01;
     hmcr = ArrayXd::Ones(insNum,1) * 0.9;
     par = ArrayXd::Ones(insNum,1) * 0.3;
+    isForceRange = false;
 
-    HarmonySearch *hs = new HarmonySearch(insRange, hms, hmcr, par, fwRatio);
+    HarmonySearch *hs = new HarmonySearch(insRange, hms, hmcr, par, fwRatio, isForceRange);
     //cout<<hs->randomPitch(0)<<' '<<hs->randomPitch(0)<<endl;
     //cout<<hs->randomPitch(0)<<' '<<hs->randomPitch(0)<<endl;
     //cout<<hs->fitness<<endl;
