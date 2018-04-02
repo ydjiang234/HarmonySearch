@@ -23,6 +23,8 @@ HarmonySearch::HarmonySearch(Eigen::ArrayXXd insRange, unsigned int hms, Eigen::
     this->genHM();
 }
 
+HarmonySearch::HarmonySearch() {};
+
 HarmonySearch::~HarmonySearch() {};
 
 bool HarmonySearch::bool_probability(double probability)

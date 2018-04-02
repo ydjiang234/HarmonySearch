@@ -28,6 +28,7 @@ public:
     
     
     HarmonySearch(Eigen::ArrayXXd insRange, unsigned int hms, Eigen::ArrayXd hmcr, Eigen::ArrayXd par, Eigen::ArrayXd fwRatio, bool isForceRange);
+    HarmonySearch();
     ~HarmonySearch();
     virtual double objFun(Eigen::ArrayXd vector);
     
