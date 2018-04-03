@@ -20,7 +20,7 @@ HarmonySearch::HarmonySearch(Eigen::ArrayXXd insRange, unsigned int hms, Eigen::
     this->gen = std::mt19937(this->rd());
     
     //generate the initial HM
-    this->genHM();
+    //this->genHM();
 }
 
 HarmonySearch::HarmonySearch() {};
@@ -58,6 +58,7 @@ void HarmonySearch::genHM()
 {
     this->HM = Eigen::ArrayXXd(this->hms, this->insNum);
     this->fitness = Eigen::ArrayXd(this->hms);
+
     for (int rowId=0; rowId<this->hms; rowId++)
     {
         for (int insId=0; insId<this->insNum; insId++)
@@ -71,6 +72,7 @@ void HarmonySearch::genHM()
 void HarmonySearch::updateHM(Eigen::ArrayXd newVector)
 {
     double newFitness = this->objFun(newVector);
+
     unsigned int  minId;
     this->fitness.minCoeff(&minId);
     double minFitness = this->fitness(minId);
@@ -130,16 +132,11 @@ Eigen::ArrayXd HarmonySearch::newPitchVector()
     return PitchVector;
 }
 
-double HarmonySearch::objFun(Eigen::ArrayXd vec)
+double HarmonySearch::objFun(Eigen::ArrayXd vector)
 {
-    double x = vec(0);
-    double y = vec(1);
-    double m = vec(2);
-    double n = vec(3);
-    
-    double out = (x-2.0)*(x-2.0) + (y-30.0)*(y-30.0) + (m-15.0)*(m-15.0) + (n-101.0)*(n-101.0);
-    return out * -1;
+    return 1;
 }
+
 
 double  HarmonySearch::limitRange(double pitch, unsigned int insId)
 {
